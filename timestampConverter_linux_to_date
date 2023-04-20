@@ -1,0 +1,1 @@
+javascript:expr=prompt('Unix-style timestamp (in milliseconds since Jan 1, 1970)','');if(expr&&parseInt(expr)==expr){d=new Date(parseInt(expr));void(alert('Date: '+d.toString()))}else{void(null)};

@@ -1,0 +1,9 @@
+javascript:(function() {
+  var currentUrl = window.location.href;
+  var indexOfSalesLead = currentUrl.indexOf("/sales/lead/");
+  if (indexOfSalesLead !== -1) {
+    var indexOfComma = currentUrl.indexOf(",", indexOfSalesLead);
+    var modifiedUrl = currentUrl.substring(0, indexOfSalesLead) + "/in/" + currentUrl.substring(indexOfSalesLead + 12, indexOfComma);
+    window.location.href = modifiedUrl;
+  }
+})();

@@ -1,0 +1,39 @@
+import pandas as pd
+import os
+import sys
+from pathlib import Path
+
+def transform_csv(file_path):
+    # Lire le fichier CSV
+    data = pd.read_csv(file_path, delimiter=';')
+    
+    # Transformation de texte sur la colonne 'profile_url'
+    data['profile_url'] = data['profile_url'].str.replace('sales/people', 'in').str.split(',').str[0]
+    
+    # Réorganiser les colonnes (ajoutez ou modifiez les noms de colonnes selon vos besoins)
+    columns_order = [
+        "headline",
+        "current_company_position",
+        "current_company",
+        "profile_url",
+        "full_name",
+        "location_name"
+    ]
+    data = data[columns_order]
+    
+    # Enregistrer le fichier transformé au format XLSX dans le répertoire "Downloads"
+    file_dir, file_name = os.path.split(file_path)
+    file_base_name, file_extension = os.path.splitext(file_name)
+    output_file_name = f"{file_base_name}_transfo.xlsx"
+    downloads_dir = Path.home() / "Downloads"
+    output_file_path = downloads_dir / output_file_name
+    data.to_excel(output_file_path, index=False)
+    print(f"File saved at {output_file_path}")
+
+if len(sys.argv) != 2:
+    print("Usage: python3 transfo_csv.py <csv_file_name>")
+else:
+    # Utiliser le nom du fichier passé en argument
+    file_name = sys.argv[1]
+    file_path = Path.home() / "Downloads" / file_name
+    transform_csv(file_path)
